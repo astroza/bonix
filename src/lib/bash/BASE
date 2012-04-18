@@ -1,0 +1,9 @@
+function join()
+{
+	printf "JOIN %s\r\n" $2 >&$1
+}
+
+function auth()
+{
+	printf "USER %s * 0 :%s\r\nNICK %s\r\n" $2 $3 $3 >&$1
+}

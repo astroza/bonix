@@ -1,0 +1,26 @@
+#!/bin/bash
+# BONIX - 2008 Felipe Astroza
+# Under GPLv2 (see LICENSE)
+# 
+
+source lib/bash/BASE
+
+# Connects to IRC SERVER
+net/connect $1 $2 < net/in > net/out &
+exec 3> net/in
+exec 4< net/out
+
+auth 3 $3 $4
+
+join 3 $5
+
+while [ 1 ]
+	do read -u 4 MESSAGE
+	if [ $? != 0 ]; then
+		break
+	else
+		echo $MESSAGE | message/parser | xargs message/launcher 3
+	fi
+done
+
+echo "BONIX finished"

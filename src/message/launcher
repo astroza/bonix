@@ -1,0 +1,26 @@
+#!/bin/bash
+# BONIX - 2008 Felipe Astroza
+# Under GPLv2 (see LICENSE)
+#
+
+# Python support
+export PYTHONPATH=$PYTHONPATH:$(pwd)/lib/python
+
+function send_response()
+{
+	if [ "x"$2 != "x" ]; then
+		echo "$output" >&3
+	fi
+}
+
+fd=$1
+shift
+cd message/$1 2> /dev/null
+if [ $? == 0 ]; then
+	shift # Avanza la lista de argumentos hacia la izquierda ( $n = $(n+1) )
+	for app in `ls`
+	do 	echo "frm $*"; output=`./$app "$@"`
+		echo "$@"
+		send_response $fd $output
+	done
+fi

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+nick=$(echo $1 | awk '{ print $1 }')
+channel=$2
+printf "JOIN %s\r\n" $channel
+printf "PRIVMSG %s :%s\r\n" $channel "$nick: aplica pozo"
